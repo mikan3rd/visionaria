@@ -4,8 +4,10 @@ jobs:
   unit:
     name: build
     env:
+      DATABASE_URL: "postgresql://user:password@localhost:5432/visionaria"
       NODE_ENV: test
       NEXTAUTH_SECRET: supersecret
+      NEXTAUTH_URL: "http://localhost:3000"
       GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
       GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
     runs-on: ubuntu-latest
