@@ -3,6 +3,8 @@
     "*.css": "tailwindcss"
   },
   "cSpell.words": [
-    "NEXTAUTH"
+    "NEXTAUTH",
+    "signin",
+    "signout"
   ]
 }
