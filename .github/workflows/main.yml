@@ -6,6 +6,8 @@ jobs:
     env:
       NODE_ENV: test
       NEXTAUTH_SECRET: supersecret
+      GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
+      GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
