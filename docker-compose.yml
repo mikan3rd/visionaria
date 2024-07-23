@@ -3,7 +3,7 @@ version: "3.9"
 
 services:
   db:
-    image: postgres:14
+    image: postgres:14@sha256:0c9b69b804edbfd211b8cdfc87ac4c79db52dbcc8fb8c278d07136db2f79fe6c
     restart: always
     ports:
       - 5432:5432
@@ -15,7 +15,7 @@ services:
       POSTGRES_DB: visionaria
 
   adminer:
-    image: adminer
+    image: adminer@sha256:34d37131366c5aa84e1693dbed48593ed6f95fb450b576c1a7a59d3a9c9e8802
     restart: always
     ports:
       - 8080:8080

@@ -56,10 +56,10 @@ dependencies:
 
 devDependencies:
   '@types/eslint':
-    specifier: ^8.56.10
+    specifier: 8.56.11
     version: 8.56.11
   '@types/node':
-    specifier: ^20.14.10
+    specifier: 20.14.11
     version: 20.14.11
   '@types/react':
     specifier: ^18.3.3
@@ -68,37 +68,37 @@ devDependencies:
     specifier: ^18.3.0
     version: 18.3.0
   '@typescript-eslint/eslint-plugin':
-    specifier: ^7.1.1
+    specifier: 7.17.0
     version: 7.17.0(@typescript-eslint/parser@7.17.0)(eslint@8.57.0)(typescript@5.5.4)
   '@typescript-eslint/parser':
-    specifier: ^7.1.1
+    specifier: 7.17.0
     version: 7.17.0(eslint@8.57.0)(typescript@5.5.4)
   drizzle-kit:
-    specifier: ^0.21.4
+    specifier: 0.21.4
     version: 0.21.4
   eslint:
-    specifier: ^8.57.0
+    specifier: 8.57.0
     version: 8.57.0
   eslint-config-next:
-    specifier: ^14.2.4
+    specifier: 14.2.5
     version: 14.2.5(eslint@8.57.0)(typescript@5.5.4)
   eslint-plugin-drizzle:
-    specifier: ^0.2.3
+    specifier: 0.2.3
     version: 0.2.3(eslint@8.57.0)
   postcss:
-    specifier: ^8.4.39
+    specifier: 8.4.39
     version: 8.4.39
   prettier:
-    specifier: ^3.3.2
+    specifier: 3.3.3
     version: 3.3.3
   prettier-plugin-tailwindcss:
-    specifier: ^0.6.5
+    specifier: 0.6.5
     version: 0.6.5(prettier@3.3.3)
   tailwindcss:
-    specifier: ^3.4.3
+    specifier: 3.4.6
     version: 3.4.6
   typescript:
-    specifier: ^5.5.3
+    specifier: 5.5.4
     version: 5.5.4
 
 packages:
