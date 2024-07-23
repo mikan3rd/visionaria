@@ -3,5 +3,14 @@
   "extends": [
     "config:best-practices",
     ":automergeMinor"
-  ]
+  ],
+  "major": {
+    "minimumReleaseAge": "28 days"
+  },
+  "minor": {
+    "minimumReleaseAge": "14 days"
+  },
+  "patch": {
+    "minimumReleaseAge": "7 days"
+  }
 }
