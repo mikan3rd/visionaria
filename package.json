@@ -52,7 +52,7 @@
     "initVersion": "7.36.2"
   },
   "engines": {
-    "node": "20.14.0"
+    "node": "20.15.1"
   },
   "packageManager": "pnpm@9.5.0"
 }
