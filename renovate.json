@@ -4,6 +4,9 @@
     "config:best-practices",
     ":automergeMinor"
   ],
+  "labels": [
+    "renovate"
+  ],
   "major": {
     "minimumReleaseAge": "28 days"
   },
