@@ -4,8 +4,11 @@
   },
   "cSpell.words": [
     "automerge",
+    "corepack",
     "NEXTAUTH",
     "signin",
-    "signout"
+    "signout",
+    "Supabase",
+    "tailwindcss"
   ]
 }
