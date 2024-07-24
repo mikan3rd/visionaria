@@ -27,3 +27,31 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 ## How do I deploy this?
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+## Development
+
+### Pre Requirements
+
+```bash
+# Installing the Supabase CLI
+# https://supabase.com/docs/guides/cli/getting-started
+brew install supabase/tap/supabase
+
+# Installing the pnpm
+# https://pnpm.io/installation
+brew install corepack
+corepack enable pnpm
+```
+
+### Getting Started
+
+```bash
+# Start the Supabase development server
+supabase start
+
+# Install dependencies
+pnpm install
+
+# Start the development server
+pnpm dev
+```
