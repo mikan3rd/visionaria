@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "configMigration": true,
   "extends": [
-    "config:best-practices",
+    "config:recommended",
+    ":pinAllExceptPeerDependencies",
     ":automergeMinor"
   ],
   "labels": [
