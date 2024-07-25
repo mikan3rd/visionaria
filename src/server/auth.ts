@@ -29,7 +29,7 @@ const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string | null;
+      id: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -56,7 +56,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session: ({ session, token }) => {
-      session.user.id = token.sub ?? null;
+      if (token.sub === undefined) {
+        throw new Error("No user ID found in JWT token");
+      }
+      session.user.id = token.sub;
       return session;
     },
   },
