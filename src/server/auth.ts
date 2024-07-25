@@ -29,6 +29,7 @@ const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
+      id: string | null;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -55,15 +56,8 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session: ({ session, token }) => {
-      console.log({ session, token });
-      return {
-        ...session,
-        ...token,
-        user: {
-          ...session.user,
-          id: token.sub,
-        },
-      };
+      session.user.id = token.sub ?? null;
+      return session;
     },
   },
 
@@ -79,28 +73,21 @@ export const authOptions: NextAuthOptions = {
       name: "Guest",
       credentials: {},
       async authorize() {
-        const getUserResponse = await supabase.auth.getUser();
-        console.log({ getUserResponse });
-        if (getUserResponse.data.user !== null) {
-          return getUserResponse.data.user;
-        }
+        const response = await supabase.auth.signInAnonymously();
 
-        const signInAnonymouslyResponse =
-          await supabase.auth.signInAnonymously();
-
-        if (signInAnonymouslyResponse.error !== null) {
-          console.error(signInAnonymouslyResponse.error);
+        if (response.error !== null) {
+          console.error(response.error);
           return null;
         }
 
-        if (signInAnonymouslyResponse.data.user === null) {
+        if (response.data.user === null) {
           console.error("No data returned from Supabase");
           return null;
         }
 
         // TODO: Save the user to the database
 
-        return signInAnonymouslyResponse.data.user;
+        return response.data.user;
       },
     }),
     GoogleProvider({
