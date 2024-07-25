@@ -5,8 +5,9 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
-// import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { createClient } from "@supabase/supabase-js";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
@@ -16,6 +17,8 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
+
+const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -44,22 +47,52 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+  session: {
+    strategy: "jwt",
   },
+
+  callbacks: {
+    jwt: async ({ token }) => {
+      return token;
+    },
+    session: ({ session, token }) => {
+      if (token.sub === undefined) {
+        throw new Error("No user ID found in JWT token");
+      }
+      session.user.id = token.sub;
+      return session;
+    },
+  },
+
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }) as Adapter,
+
   providers: [
+    CredentialsProvider({
+      name: "Guest",
+      credentials: {},
+      async authorize() {
+        const response = await supabase.auth.signInAnonymously();
+
+        if (response.error !== null) {
+          console.error(response.error);
+          return null;
+        }
+
+        if (response.data.user === null) {
+          console.error("No data returned from Supabase");
+          return null;
+        }
+
+        // TODO: Save the user to the database
+
+        return response.data.user;
+      },
+    }),
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
