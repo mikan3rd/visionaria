@@ -81,13 +81,19 @@ export const authOptions: NextAuthOptions = {
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        const { data, error } = await supabase.auth.signInAnonymously();
+        const response = await supabase.auth.signInAnonymously();
 
-        if (error !== null || data.user === null) {
-          console.error(error);
+        if (response.error !== null) {
+          console.error(response.error);
           return null;
         }
-        const user: User = data.user;
+
+        if (response.data.user === null) {
+          console.error("No data returned from Supabase");
+          return null;
+        }
+
+        const user: User = response.data.user;
         return user;
       },
     }),
