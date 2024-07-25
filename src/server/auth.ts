@@ -3,7 +3,6 @@ import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
-  type User,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
@@ -48,14 +47,25 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
+
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    jwt: async ({ token }) => {
+      return token;
+    },
+    session: ({ session, token }) => {
+      console.log({ session, token });
+      return {
+        ...session,
+        ...token,
+        user: {
+          ...session.user,
+          id: token.sub,
+        },
+      };
+    },
   },
 
   adapter: DrizzleAdapter(db, {
@@ -67,23 +77,31 @@ export const authOptions: NextAuthOptions = {
 
   providers: [
     CredentialsProvider({
-      name: "Guest Login",
+      name: "Guest",
       credentials: {},
       async authorize() {
-        const response = await supabase.auth.signInAnonymously();
+        const getUserResponse = await supabase.auth.getUser();
+        console.log({ getUserResponse });
+        if (getUserResponse.data.user !== null) {
+          return getUserResponse.data.user;
+        }
 
-        if (response.error !== null) {
-          console.error(response.error);
+        const signInAnonymouslyResponse =
+          await supabase.auth.signInAnonymously();
+
+        if (signInAnonymouslyResponse.error !== null) {
+          console.error(signInAnonymouslyResponse.error);
           return null;
         }
 
-        if (response.data.user === null) {
+        if (signInAnonymouslyResponse.data.user === null) {
           console.error("No data returned from Supabase");
           return null;
         }
 
-        const user: User = response.data.user;
-        return user;
+        // TODO: Save the user to the database
+
+        return signInAnonymouslyResponse.data.user;
       },
     }),
     GoogleProvider({
