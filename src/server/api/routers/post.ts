@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import {
@@ -25,8 +26,9 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getLatest: publicProcedure.query(async ({ ctx }) => {
+  getLatest: protectedProcedure.query(async ({ ctx }) => {
     const post = await ctx.db.query.posts.findFirst({
+      where: eq(posts.createdById, ctx.session.user.id),
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
     });
 

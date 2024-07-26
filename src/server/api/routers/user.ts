@@ -3,12 +3,15 @@ import { users } from "~/server/db/schema";
 
 export const userRouter = createTRPCRouter({
   createAnonymous: publicProcedure.mutation(async ({ ctx }) => {
-    console.debug("createAnonymous", { ctx });
+    console.debug("userRouter.createAnonymous", { ctx });
     const result = await ctx.db.transaction(async (_trx) => {
       const results = await ctx.db
         .insert(users)
         .values({
           name: `Guest ${Date.now()}`,
+          email: null,
+          emailVerified: null,
+          image: null,
         })
         .returning();
       console.log("results", results);
