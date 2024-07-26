@@ -1,17 +1,19 @@
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { users } from "~/server/db/schema";
 
 export const userRouter = createTRPCRouter({
-  createAnonymous: protectedProcedure.mutation(async ({ ctx, input }) => {
-    console.debug("createAnonymous", { ctx, input });
-    await ctx.db.transaction(async (_trx) => {
-      const user = await ctx.db
+  createAnonymous: publicProcedure.mutation(async ({ ctx }) => {
+    console.debug("createAnonymous", { ctx });
+    const result = await ctx.db.transaction(async (_trx) => {
+      const results = await ctx.db
         .insert(users)
         .values({
           name: `Guest ${Date.now()}`,
         })
         .returning();
-      console.log("user", user);
+      console.log("results", results);
+      return results[0];
     });
+    return result;
   }),
 });

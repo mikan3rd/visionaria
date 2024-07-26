@@ -18,6 +18,7 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
+import { api } from "~/trpc/server";
 
 const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 
@@ -96,9 +97,16 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user: User = response.data.user;
+        const result = await api.user.createAnonymous();
+        console.log("result", result);
 
-        // TODO: Save the user to the database
+        if (result === undefined) {
+          console.error("No user created");
+          return null;
+        }
+
+        const user: User = response.data.user;
+        user.name = result.name;
 
         return user;
       },
