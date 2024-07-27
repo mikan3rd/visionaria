@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        if (response.data.user === null || response.data.session === null) {
+        if (response.data.user === null) {
           console.error("No data returned from Supabase");
           return null;
         }
