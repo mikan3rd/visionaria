@@ -1,10 +1,17 @@
 import { db } from "~/server/db";
-import { users } from "~/server/db/schema";
+import { users, accounts, type User, type Account } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 
-type User = typeof users.$inferSelect;
-
-export const createAnonymous = async (): Promise<User> => {
+export const createAnonymous = async (
+  args: Pick<
+    Account,
+    | "providerAccountId"
+    | "refresh_token"
+    | "access_token"
+    | "expires_at"
+    | "token_type"
+  >,
+): Promise<User> => {
   return await db.transaction(async (tx) => {
     const ids = await tx
       .insert(users)
@@ -21,15 +28,24 @@ export const createAnonymous = async (): Promise<User> => {
       throw new Error("No user ID returned");
     }
 
+    await tx.insert(accounts).values({
+      userId,
+      type: "other",
+      provider: "anonymous",
+      ...args,
+    });
+
     const user = await tx.query.users.findFirst({
       where: eq(users.id, userId),
       with: {
         accounts: true,
       },
     });
+
     if (user === undefined) {
       throw new Error("No user created");
     }
+
     return user;
   });
 };

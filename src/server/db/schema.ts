@@ -58,15 +58,15 @@ export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
 }));
 
+type AccountType = AdapterAccount["type"] | "other";
+
 export const accounts = createTable(
   "account",
   {
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id),
-    type: varchar("type", { length: 255 })
-      .$type<AdapterAccount["type"]>()
-      .notNull(),
+    type: varchar("type", { length: 255 }).$type<AccountType>().notNull(),
     provider: varchar("provider", { length: 255 }).notNull(),
     providerAccountId: varchar("provider_account_id", {
       length: 255,
@@ -128,3 +128,7 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
 );
+
+export type User = typeof users.$inferSelect;
+export type Account = typeof accounts.$inferSelect;
+export type Post = typeof posts.$inferSelect;
