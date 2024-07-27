@@ -85,7 +85,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {},
       async authorize(_credential, _req) {
         const response = await supabase.auth.signInAnonymously();
-        console.debug("signInAnonymously", response);
+        // console.debug("signInAnonymously", response);
 
         if (response.error !== null) {
           console.error(response.error);
@@ -98,12 +98,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const result = await createAnonymous();
-        console.log("result", result);
-
-        if (result === undefined) {
-          console.error("No user created");
-          return null;
-        }
+        // console.debug("result", result);
 
         const user: User = {
           ...response.data.user,

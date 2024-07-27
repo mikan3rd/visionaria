@@ -1,7 +1,9 @@
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
 
-export const createAnonymous = async () => {
+type User = typeof users.$inferSelect;
+
+export const createAnonymous = async (): Promise<User> => {
   const results = await db
     .insert(users)
     .values({
@@ -11,5 +13,10 @@ export const createAnonymous = async () => {
       image: null,
     })
     .returning();
-  return results[0];
+
+  const user = results[0];
+  if (user === undefined) {
+    throw new Error("No user created");
+  }
+  return user;
 };
