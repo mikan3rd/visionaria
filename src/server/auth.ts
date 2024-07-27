@@ -97,8 +97,26 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const result = await createAnonymous();
-        // console.debug("result", result);
+        if (response.data.session === null) {
+          console.error("No session returned from Supabase");
+          return null;
+        }
+
+        const {
+          data: {
+            user: { id },
+            session: { refresh_token, access_token, expires_at, token_type },
+          },
+        } = response;
+
+        const result = await createAnonymous({
+          providerAccountId: id,
+          refresh_token,
+          access_token,
+          expires_at: expires_at ?? null,
+          token_type,
+        });
+        console.debug("result", result);
 
         const user: User = {
           ...response.data.user,
