@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { type User } from "next-auth";
 import {
   getServerSession,
   type DefaultSession,
@@ -17,6 +18,7 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
+import { createAnonymous } from "~/server/repository/user";
 
 const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 
@@ -30,6 +32,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      name: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -52,10 +55,14 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    jwt: async ({ token }) => {
+    jwt: async (params) => {
+      // console.debug("jwt callback", params);
+      const { token } = params;
       return token;
     },
-    session: ({ session, token }) => {
+    session: (params) => {
+      // console.debug("session callback", params);
+      const { session, token } = params;
       if (token.sub === undefined) {
         throw new Error("No user ID found in JWT token");
       }
@@ -65,6 +72,7 @@ export const authOptions: NextAuthOptions = {
   },
 
   adapter: DrizzleAdapter(db, {
+    // @ts-expect-error - Allow nullable email
     usersTable: users,
     accountsTable: accounts,
     sessionsTable: sessions,
@@ -75,8 +83,9 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Guest",
       credentials: {},
-      async authorize() {
+      async authorize(_credential, _req) {
         const response = await supabase.auth.signInAnonymously();
+        // console.debug("signInAnonymously", response);
 
         if (response.error !== null) {
           console.error(response.error);
@@ -88,9 +97,16 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // TODO: Save the user to the database
+        const result = await createAnonymous();
+        // console.debug("result", result);
 
-        return response.data.user;
+        const user: User = {
+          ...response.data.user,
+          id: result.id,
+          name: result.name,
+        };
+
+        return user;
       },
     }),
     GoogleProvider({
