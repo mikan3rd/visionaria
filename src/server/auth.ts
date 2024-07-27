@@ -18,7 +18,7 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
-import { api } from "~/trpc/server";
+import { createAnonymous } from "~/server/repository/user";
 
 const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 
@@ -56,12 +56,12 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     jwt: async (params) => {
-      console.debug("jwt callback", params);
+      // console.debug("jwt callback", params);
       const { token } = params;
       return token;
     },
     session: (params) => {
-      console.debug("session callback", params);
+      // console.debug("session callback", params);
       const { session, token } = params;
       if (token.sub === undefined) {
         throw new Error("No user ID found in JWT token");
@@ -97,7 +97,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const result = await api.user.createAnonymous();
+        const result = await createAnonymous();
         console.log("result", result);
 
         if (result === undefined) {
@@ -105,8 +105,11 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user: User = response.data.user;
-        user.name = result.name;
+        const user: User = {
+          ...response.data.user,
+          id: result.id,
+          name: result.name,
+        };
 
         return user;
       },
