@@ -67,6 +67,15 @@ export const Main = async () => {
                 Sign out
               </Link>
             )}
+
+            {session !== null && (
+              <Link
+                href="/user"
+                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+              >
+                My Page
+              </Link>
+            )}
           </div>
         </div>
 
