@@ -2,6 +2,17 @@ import { db } from "~/server/db";
 import { users, accounts, type User, type Account } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 
+export const getUser = async (
+  id: string,
+): Promise<(User & { accounts: Account[] }) | undefined> => {
+  return await db.query.users.findFirst({
+    where: eq(users.id, id),
+    with: {
+      accounts: true,
+    },
+  });
+};
+
 export const createAnonymous = async (
   args: Pick<
     Account,
