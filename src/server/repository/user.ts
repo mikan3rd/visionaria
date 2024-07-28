@@ -11,7 +11,7 @@ export const createAnonymous = async (
     | "expires_at"
     | "token_type"
   >,
-): Promise<User> => {
+): Promise<User & { accounts: Account[] }> => {
   return await db.transaction(async (tx) => {
     const ids = await tx
       .insert(users)

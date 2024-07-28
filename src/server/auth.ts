@@ -1,11 +1,7 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { type User } from "next-auth";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
-import { type Adapter } from "next-auth/adapters";
+import { getServerSession, type NextAuthOptions } from "next-auth";
+import { type AdapterUser, type Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
@@ -29,19 +25,28 @@ const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      name: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
+  interface Session {
+    user: User;
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    id: string;
+    name: string;
+    isAnonymous: boolean;
+  }
+}
+
+declare module "next-auth/adapters" {
+  interface AdapterUser extends User {
+    isAnonymous: undefined;
+  }
+}
+
+declare module "next-auth/jwt" {
+  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
+  interface JWT {
+    isAnonymous: boolean;
+  }
 }
 
 /**
@@ -58,6 +63,8 @@ export const authOptions: NextAuthOptions = {
     jwt: async (params) => {
       // console.debug("jwt callback", params);
       const { token } = params;
+      const user = params.user as User | AdapterUser | undefined;
+      token.isAnonymous = user?.isAnonymous ?? false;
       return token;
     },
     session: (params) => {
@@ -67,6 +74,7 @@ export const authOptions: NextAuthOptions = {
         throw new Error("No user ID found in JWT token");
       }
       session.user.id = token.sub;
+      session.user.isAnonymous = token.isAnonymous;
       return session;
     },
   },
@@ -116,12 +124,13 @@ export const authOptions: NextAuthOptions = {
           expires_at: expires_at ?? null,
           token_type,
         });
-        console.debug("result", result);
+        // console.debug("result", result);
 
         const user: User = {
           ...response.data.user,
           id: result.id,
           name: result.name,
+          isAnonymous: true,
         };
 
         return user;
