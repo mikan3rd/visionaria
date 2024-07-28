@@ -4,7 +4,6 @@ import { api, HydrateClient } from "~/trpc/server";
 import { Index } from "~/components/pages/user";
 
 export async function generateMetadata(
-  {},
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const user = await api.user.getSelf();
