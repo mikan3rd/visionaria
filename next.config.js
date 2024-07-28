@@ -12,6 +12,9 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    typedRoutes: true,
+  },
 };
 
 export default config;

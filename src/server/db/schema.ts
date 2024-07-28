@@ -7,6 +7,7 @@ import {
   serial,
   text,
   timestamp,
+  unique,
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
@@ -63,6 +64,7 @@ type AccountType = AdapterAccount["type"] | "other";
 export const accounts = createTable(
   "account",
   {
+    id: serial("id").primaryKey(),
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id),
@@ -80,9 +82,7 @@ export const accounts = createTable(
     session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
-    compoundKey: primaryKey({
-      columns: [account.provider, account.providerAccountId],
-    }),
+    unq: unique().on(account.provider, account.providerAccountId),
     userIdIdx: index("account_user_id_idx").on(account.userId),
   }),
 );
