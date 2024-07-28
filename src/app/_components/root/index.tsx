@@ -7,6 +7,7 @@ import { api } from "~/trpc/server";
 export const Main = async () => {
   const hello = await api.post.hello({ text: "from tRPC" });
   const session = await getServerAuthSession();
+  console.log({ session });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
@@ -50,16 +51,18 @@ export const Main = async () => {
               </p>
             )}
 
-            {session === null ? (
+            {session === null && (
               <Link
-                href={"/api/auth/signin"}
+                href="/api/auth/signin"
                 className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
               >
                 Sign in
               </Link>
-            ) : (
+            )}
+
+            {session !== null && !session.user.isAnonymous && (
               <Link
-                href={"/api/auth/signout"}
+                href="/api/auth/signout"
                 className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
               >
                 Sign out
