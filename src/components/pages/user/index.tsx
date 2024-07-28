@@ -13,7 +13,7 @@ export const Index = async () => {
           <div>
             {user.accounts.map((account) => {
               return (
-                <div key={account.providerAccountId}>
+                <div key={account.id}>
                   <div>{account.provider}</div>
                 </div>
               );
