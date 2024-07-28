@@ -30,18 +30,13 @@ const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: {
-      id: string;
-      name: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
+    user: User;
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    id: string;
+    name: string;
+  }
 }
 
 /**
