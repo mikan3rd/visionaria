@@ -1,5 +1,5 @@
 "use client";
 
-import { Error } from "~/components/feature/error";
+import { ErrorComponent } from "~/components/feature/error";
 
-export default Error;
+export default ErrorComponent;
