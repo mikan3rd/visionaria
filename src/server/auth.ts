@@ -116,7 +116,7 @@ export const authOptions: NextAuthOptions = {
           expires_at: expires_at ?? null,
           token_type,
         });
-        console.debug("result", result);
+        // console.debug("result", result);
 
         const user: User = {
           ...response.data.user,
