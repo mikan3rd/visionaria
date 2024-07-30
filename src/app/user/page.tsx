@@ -14,8 +14,6 @@ export async function generateMetadata(
 }
 
 export default async function Page() {
-  void api.user.getSelf.prefetch();
-
   return (
     <HydrateClient>
       <Index />
