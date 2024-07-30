@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { api } from "~/trpc/server";
+import { Button } from "~/components/ui/button";
 
 export const Index = async () => {
   const user = await api.user.getSelf();
@@ -19,12 +20,10 @@ export const Index = async () => {
           })}
         </div>
       </div>
-      <Link
-        href="/"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-      >
-        Top
-      </Link>
+
+      <Button asChild>
+        <Link href="/">Top</Link>
+      </Button>
     </>
   );
 };
