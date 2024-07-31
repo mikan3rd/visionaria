@@ -1,11 +1,16 @@
 import { type Metadata, type ResolvingMetadata } from "next";
 
-import { api, HydrateClient } from "~/trpc/server";
+import { api } from "~/trpc/server";
 import { Index } from "~/components/pages/user";
 
 export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  /*
+   * FIXME:
+   * generateMetadata と Server Component で同じfetchを使用しているので
+   * 2回目はcacheから取得される想定だが、2回fetchが発生してしまっている
+   */
   const user = await api.user.getSelf();
   const parentTitle = (await parent).title;
   return {
@@ -14,9 +19,5 @@ export async function generateMetadata(
 }
 
 export default async function Page() {
-  return (
-    <HydrateClient>
-      <Index />
-    </HydrateClient>
-  );
+  return <Index />;
 }
