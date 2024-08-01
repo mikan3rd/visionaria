@@ -3,7 +3,6 @@ import {
   index,
   integer,
   pgTableCreator,
-  primaryKey,
   serial,
   text,
   timestamp,
@@ -113,21 +112,6 @@ export const sessions = createTable(
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
 }));
-
-export const verificationTokens = createTable(
-  "verification_token",
-  {
-    identifier: varchar("identifier", { length: 255 }).notNull(),
-    token: varchar("token", { length: 255 }).notNull(),
-    expires: timestamp("expires", {
-      mode: "date",
-      withTimezone: true,
-    }).notNull(),
-  },
-  (vt) => ({
-    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  }),
-);
 
 export type User = typeof users.$inferSelect;
 export type Account = typeof accounts.$inferSelect;

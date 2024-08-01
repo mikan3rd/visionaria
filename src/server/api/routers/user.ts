@@ -1,5 +1,19 @@
+import { z } from "zod";
+
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getUser } from "~/server/repository/user";
+
+const SelfUserSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  accounts: z.array(
+    z.object({
+      id: z.number(),
+      provider: z.string(),
+    }),
+  ),
+});
 
 export const userRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) => {
@@ -7,6 +21,6 @@ export const userRouter = createTRPCRouter({
     if (user === undefined) {
       throw new Error("User not found");
     }
-    return user;
+    return SelfUserSchema.parse(user);
   }),
 });
