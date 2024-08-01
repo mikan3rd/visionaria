@@ -3,8 +3,6 @@ import { Separator } from "~/components/ui/separator";
 import { ProfileForm } from "./ProfileForm";
 
 export const Index = async () => {
-  const user = await api.user.getSelf();
-
   return (
     <div className="space-y-6">
       <div>

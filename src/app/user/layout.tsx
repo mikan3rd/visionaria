@@ -22,10 +22,6 @@ const sidebarNavItems: SidebarNavProps["items"] = [
     title: "Notifications",
     href: "/user",
   },
-  {
-    title: "Display",
-    href: "/user",
-  },
 ];
 
 export default function Layout({
