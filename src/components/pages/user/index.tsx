@@ -1,4 +1,3 @@
-import { api } from "~/trpc/server";
 import { Separator } from "~/components/ui/separator";
 import { ProfileForm } from "./ProfileForm";
 
