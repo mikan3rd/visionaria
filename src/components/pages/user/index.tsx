@@ -4,6 +4,7 @@ import { api } from "~/trpc/server";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { SidebarNav } from "./SIdebarNav";
+import { ProfileForm } from "./ProfileForm";
 
 type SidebarNavProps = React.ComponentProps<typeof SidebarNav>;
 
@@ -47,7 +48,18 @@ export const Index = async () => {
           <aside className="-mx-4 lg:w-1/5">
             <SidebarNav items={sidebarNavItems} />
           </aside>
-          <div className="flex-1 lg:max-w-2xl">children</div>
+          <div className="flex-1 lg:max-w-2xl">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-medium">Profile</h3>
+                <p className="text-muted-foreground text-sm">
+                  This is how others will see you on the site.
+                </p>
+              </div>
+              <Separator />
+              <ProfileForm />
+            </div>
+          </div>
         </div>
       </div>
 
