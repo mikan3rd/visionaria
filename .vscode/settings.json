@@ -6,6 +6,7 @@
     "automerge",
     "corepack",
     "NEXTAUTH",
+    "shadcn",
     "signin",
     "signout",
     "Supabase",
