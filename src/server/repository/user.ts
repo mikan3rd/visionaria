@@ -13,6 +13,13 @@ export const getUser = async (
   });
 };
 
+export const updateUser = async (
+  id: string,
+  args: Omit<Partial<User>, "id">,
+) => {
+  return await db.update(users).set(args).where(eq(users.id, id));
+};
+
 export const createAnonymous = async (
   args: Pick<
     Account,

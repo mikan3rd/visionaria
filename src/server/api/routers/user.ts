@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { getUser } from "~/server/repository/user";
+import { getUser, updateUser } from "~/server/repository/user";
 
 const SelfUserSchema = z.object({
   id: z.string(),
@@ -23,4 +23,13 @@ export const userRouter = createTRPCRouter({
     }
     return SelfUserSchema.parse(user);
   }),
+
+  updateSelf: protectedProcedure
+    .input(z.object({ name: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      await updateUser(ctx.session.user.id, {
+        name: input.name,
+      });
+      return;
+    }),
 });

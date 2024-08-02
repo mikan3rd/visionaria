@@ -41,6 +41,14 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 export function ProfileForm() {
   const [user] = api.user.getSelf.useSuspenseQuery();
 
+  const utils = api.useUtils();
+
+  const updateSelf = api.user.updateSelf.useMutation({
+    onSuccess: async () => {
+      await utils.user.getSelf.invalidate();
+    },
+  });
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -52,10 +60,17 @@ export function ProfileForm() {
   });
 
   function onSubmit(data: ProfileFormValues) {
+    type Variables = Parameters<(typeof updateSelf)["mutate"]>[0];
+    const variables: Variables = {
+      name: data.username,
+    };
+    updateSelf.mutate(variables);
     toast("You submitted the following values:", {
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(variables, null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -104,6 +119,7 @@ export function ProfileForm() {
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
                   className="resize-none"
+                  readOnly
                   {...field}
                 />
               </FormControl>
