@@ -11,6 +11,7 @@
     "signout",
     "sonner",
     "Supabase",
-    "tailwindcss"
+    "tailwindcss",
+    "typecheck"
   ]
 }
