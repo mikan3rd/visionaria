@@ -2,18 +2,18 @@
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+## Libraries
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
-
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
-
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
-- [Supabase](https://supabase.com)
+- Framework: [Next.js](https://nextjs.org)
+- Auth: [NextAuth.js](https://next-auth.js.org)
+- CSS: [Tailwind CSS](https://tailwindcss.com)
+- UI: [shadcn](https://ui.shadcn.com)
+- Data Fetch: [TanStack Query](https://tanstack.com/query)
+- API: [tRPC](https://trpc.io)
+- Schema & Validation: [zod](https://zod.dev/)
+- Form: [React Hook Form](https://react-hook-form.com)
+- ORM: [Drizzle](https://orm.drizzle.team)
+- Database: [Supabase](https://supabase.com)
 
 ## Learn More
 

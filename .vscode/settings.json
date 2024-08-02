@@ -6,9 +6,12 @@
     "automerge",
     "corepack",
     "NEXTAUTH",
+    "shadcn",
     "signin",
     "signout",
+    "sonner",
     "Supabase",
-    "tailwindcss"
+    "tailwindcss",
+    "typecheck"
   ]
 }

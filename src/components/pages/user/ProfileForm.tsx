@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { api } from "~/trpc/react";
-import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,7 +16,8 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { toast } from "~/components/ui/use-toast";
+import { toast } from "sonner";
+import { ButtonLoading } from "~/components/ui/Button/ButtonLoading";
 
 const profileFormSchema = z.object({
   username: z
@@ -41,22 +41,36 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 export function ProfileForm() {
   const [user] = api.user.getSelf.useSuspenseQuery();
 
+  const utils = api.useUtils();
+
+  const updateSelf = api.user.updateSelf.useMutation({
+    onSuccess: async () => {
+      await utils.user.getSelf.invalidate();
+    },
+  });
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
       username: user.name,
-      email: user?.email,
+      email: user.email,
       bio: "I own a computer.",
     },
     mode: "onChange",
   });
 
   function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "You submitted the following values:",
+    type Variables = Parameters<(typeof updateSelf)["mutate"]>[0];
+    const variables: Variables = {
+      name: data.username,
+    };
+    updateSelf.mutate(variables);
+    toast("You submitted the following values:", {
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(variables, null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -105,6 +119,7 @@ export function ProfileForm() {
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
                   className="resize-none"
+                  readOnly
                   {...field}
                 />
               </FormControl>
@@ -116,7 +131,9 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Update profile</Button>
+        <ButtonLoading type="submit" isLoading={updateSelf.isPending}>
+          Update profile
+        </ButtonLoading>
       </form>
     </Form>
   );
