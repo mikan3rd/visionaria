@@ -45,7 +45,7 @@ export function ProfileForm() {
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
       username: user.name,
-      email: user?.email,
+      email: user.email,
       bio: "I own a computer.",
     },
     mode: "onChange",
