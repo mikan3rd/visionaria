@@ -8,12 +8,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
-import {
-  accounts,
-  sessions,
-  users,
-  verificationTokens,
-} from "~/server/db/schema";
+import { accounts, sessions, users } from "~/server/db/schema";
 import { createAnonymous } from "~/server/repository/user";
 
 const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
@@ -83,8 +78,7 @@ export const authOptions: NextAuthOptions = {
     // @ts-expect-error - Allow nullable email
     usersTable: users,
     accountsTable: accounts,
-    sessionsTable: sessions,
-    verificationTokensTable: verificationTokens,
+    sessionsTable: sessions, // TODO: 不要であれば削除
   }) as Adapter,
 
   providers: [

@@ -1,29 +1,17 @@
-import Link from "next/link";
-
-import { api } from "~/trpc/server";
-import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
+import { ProfileForm } from "./ProfileForm";
 
 export const Index = async () => {
-  const user = await api.user.getSelf();
-
   return (
-    <>
+    <div className="space-y-6">
       <div>
-        <div>{user.name}</div>
-        <div>
-          {user.accounts.map((account) => {
-            return (
-              <div key={account.id}>
-                <div>{account.provider}</div>
-              </div>
-            );
-          })}
-        </div>
+        <h3 className="text-lg font-medium">Profile</h3>
+        <p className="text-muted-foreground text-sm">
+          This is how others will see you on the site.
+        </p>
       </div>
-
-      <Button asChild>
-        <Link href="/">Top</Link>
-      </Button>
-    </>
+      <Separator />
+      <ProfileForm />
+    </div>
   );
 };
