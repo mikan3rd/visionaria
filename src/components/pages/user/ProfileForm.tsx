@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { api } from "~/trpc/react";
-import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,6 +17,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { toast } from "sonner";
+import { ButtonLoading } from "~/components/ui/Button/ButtonLoading";
 
 const profileFormSchema = z.object({
   username: z
@@ -131,7 +131,9 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Update profile</Button>
+        <ButtonLoading type="submit" isLoading={updateSelf.isPending}>
+          Update profile
+        </ButtonLoading>
       </form>
     </Form>
   );
