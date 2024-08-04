@@ -13,6 +13,7 @@ jobs:
       GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
       GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
