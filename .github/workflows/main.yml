@@ -13,13 +13,14 @@ jobs:
       GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
       GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v4
         with:
