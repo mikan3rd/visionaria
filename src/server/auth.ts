@@ -75,7 +75,6 @@ export const authOptions: NextAuthOptions = {
   },
 
   adapter: DrizzleAdapter(db, {
-    // @ts-expect-error - Allow nullable email
     usersTable: users,
     accountsTable: accounts,
     sessionsTable: sessions, // TODO: 不要であれば削除
