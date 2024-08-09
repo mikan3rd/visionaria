@@ -1,13 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "configMigration": true,
-  "extends": [
-    "config:js-app",
-    ":automergeMinor"
-  ],
-  "labels": [
-    "renovate"
-  ],
+  "extends": ["config:js-app", ":automergeMinor"],
+  "labels": ["renovate"],
   "major": {
     "minimumReleaseAge": "28 days"
   },

@@ -1,7 +1,7 @@
-import { type Metadata, type ResolvingMetadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 
-import { api, HydrateClient } from "~/trpc/server";
 import { Index } from "~/components/pages/user";
+import { HydrateClient, api } from "~/trpc/server";
 
 export async function generateMetadata(
   parent: ResolvingMetadata,
