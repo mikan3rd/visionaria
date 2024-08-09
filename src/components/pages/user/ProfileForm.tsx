@@ -4,7 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { api } from "~/trpc/react";
+import { toast } from "sonner";
+import { ButtonLoading } from "~/components/ui/Button/ButtonLoading";
 import {
   Form,
   FormControl,
@@ -16,8 +17,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { toast } from "sonner";
-import { ButtonLoading } from "~/components/ui/Button/ButtonLoading";
+import { api } from "~/trpc/react";
 
 const profileFormSchema = z.object({
   username: z

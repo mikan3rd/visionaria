@@ -1,11 +1,10 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { type User } from "next-auth";
-import { getServerSession, type NextAuthOptions } from "next-auth";
-import { type AdapterUser, type Adapter } from "next-auth/adapters";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
-
+import type { User } from "next-auth";
+import { type NextAuthOptions, getServerSession } from "next-auth";
+import type { Adapter, AdapterUser } from "next-auth/adapters";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { env } from "~/env";
 import { db } from "~/server/db";
 import { accounts, sessions, users } from "~/server/db/schema";
