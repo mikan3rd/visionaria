@@ -12,6 +12,7 @@
     "dev": "next dev --port 3030",
     "typecheck": "tsc --noEmit",
     "lint": "next lint --max-warnings=0",
+    "check": "pnpm biome check --write .",
     "start": "next start"
   },
   "dependencies": {
