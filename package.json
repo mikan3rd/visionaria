@@ -51,7 +51,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "20.16.15",
-    "@types/react": "18.3.11",
+    "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "drizzle-kit": "0.26.2",
     "postcss": "8.4.47",
