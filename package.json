@@ -26,7 +26,7 @@
     "@radix-ui/react-slot": "1.1.1",
     "@supabase/supabase-js": "2.47.8",
     "@t3-oss/env-nextjs": "0.11.1",
-    "@tanstack/react-query": "5.62.7",
+    "@tanstack/react-query": "5.62.8",
     "@trpc/client": "11.0.0-rc.660",
     "@trpc/react-query": "11.0.0-rc.660",
     "@trpc/server": "11.0.0-rc.660",
