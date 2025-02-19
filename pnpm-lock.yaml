@@ -103,8 +103,8 @@ importers:
         specifier: 1.9.4
         version: 1.9.4
       '@types/node':
-        specifier: 20.17.6
-        version: 20.17.6
+        specifier: 20.17.17
+        version: 20.17.17
       '@types/react':
         specifier: 18.3.18
         version: 18.3.18
@@ -970,8 +970,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@types/node@20.17.6':
-    resolution: {integrity: sha512-VEI7OdvK2wP7XHnsuXbAJnEpEkF6NjSN45QJlL4VGqZSXsnicpesdTWsg9RISeSdYd3yeRj/y3k5KGjUXYnFwQ==}
+  '@types/node@20.17.17':
+    resolution: {integrity: sha512-/WndGO4kIfMicEQLTi/mDANUu/iVUhT7KboZPdEqqHQ4aTS+3qT3U5gIqWDFV+XouorjfgGqvKILJeHhuQgFYg==}
 
   '@types/phoenix@1.6.5':
     resolution: {integrity: sha512-xegpDuR+z0UqG9fwHqNoy3rI7JDlvaPh2TY47Fl80oq6g+hXT+c/LEuE43X48clZ6lOfANl5WrPur9fYO1RJ/w==}
@@ -2426,7 +2426,7 @@ snapshots:
     dependencies:
       typescript: 5.7.3
 
-  '@types/node@20.17.6':
+  '@types/node@20.17.17':
     dependencies:
       undici-types: 6.19.8
 
@@ -2445,7 +2445,7 @@ snapshots:
 
   '@types/ws@8.5.11':
     dependencies:
-      '@types/node': 20.17.6
+      '@types/node': 20.17.17
 
   ansi-regex@5.0.1: {}
 
