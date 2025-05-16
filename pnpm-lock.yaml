@@ -57,8 +57,8 @@ importers:
         specifier: 0.43.1
         version: 0.43.1(@libsql/client-wasm@0.14.0)(gel@2.0.0)(postgres@3.4.5)
       geist:
-        specifier: 1.4.1
-        version: 1.4.1(next@14.2.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: 1.4.2
+        version: 1.4.2(next@14.2.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       next:
         specifier: 14.2.28
         version: 14.2.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1289,8 +1289,8 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  geist@1.4.1:
-    resolution: {integrity: sha512-uyVD2rGwXoGNqr+SfXzz3eL2h6zDG72d6vPbfm6u2BEfk8WT23BC1lxSwAV/FIFezPkTutAw00MQ0at5W+5olA==}
+  geist@1.4.2:
+    resolution: {integrity: sha512-OQUga/KUc8ueijck6EbtT07L4tZ5+TZgjw8PyWfxo16sL5FWk7gNViPNU8hgCFjy6bJi9yuTP+CRpywzaGN8zw==}
     peerDependencies:
       next: '>=13.2.0'
 
@@ -2752,7 +2752,7 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  geist@1.4.1(next@14.2.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  geist@1.4.2(next@14.2.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       next: 14.2.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
